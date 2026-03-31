@@ -120,6 +120,39 @@
             font-size: 0.95rem;
         }
 
+        .media-section {
+            padding: 80px 5%;
+            text-align: center;
+        }
+
+        .media-section h2 {
+            margin-bottom: 10px;
+        }
+
+        .media-section p {
+            margin-bottom: 30px;
+            color: var(--text-dim);
+        }
+
+        .media-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .media-gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .media-gallery img:hover {
+            transform: scale(1.05);
+        }
+
         footer {
             text-align: center;
             padding: 60px 40px;
@@ -136,6 +169,7 @@
         <div class="nav">
             <a href="#features">Features</a>
             <a href="#departments">Departments</a>
+            <a href="#media">Media</a>
         </div>
     </div>
 
@@ -184,23 +218,34 @@
             </div>
 
             <div class="card">
-                <i class="fas fa-user"></i>
-                <h3>Civilian Operations</h3>
-                <p>Create your own story and roleplay freely.</p>
-            </div>
-
-            <div class="card">
                 <i class="fas fa-road"></i>
                 <h3>Department Of Transportation</h3>
                 <p>Maintain roads, streetlamps, or just do regular maintenance.</p>
             </div>
-            
+
             <div class="card">
                 <i class="fa-solid fa-handcuffs"></i>
                 <h3>Become a Criminal</h3>
-                <p>Rob Stores, Rule the Streets, Show dominance.</p>
+                <p>Rob stores, rule the streets, and show dominance.</p>
             </div>
-            
+
+            <div class="card">
+                <i class="fas fa-user"></i>
+                <h3>Civilian Operations</h3>
+                <p>Create your own story and roleplay freely.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="media" class="media-section">
+        <h2>Media</h2>
+        <p>Take a look at Palm Beach County Roleplay in action.</p>
+
+        <div class="media-gallery">
+            <img src="images/media1.png" alt="Palm Beach County Roleplay screenshot 1">
+            <img src="images/media2.png" alt="Palm Beach County Roleplay screenshot 2">
+            <img src="images/media3.png" alt="Palm Beach County Roleplay screenshot 3">
+            <img src="images/media4.png" alt="Palm Beach County Roleplay screenshot 4">
         </div>
     </section>
 
