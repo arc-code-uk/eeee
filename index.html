@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palm Beach County Roleplay</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #4d9fff;
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --text-main: #ffffff;
+            --text-dim: #a1a1a1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+        }
+
+        .navbar {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav a {
+            margin-left: 20px;
+            color: var(--text-dim);
+            text-decoration: none;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: auto;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            background: var(--primary);
+            padding: 15px 35px;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .section {
+            padding: 80px 5%;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        .card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="brand">Palm Beach County RP</div>
+        <div class="nav">
+            <a href="#features">Features</a>
+            <a href="#departments">Departments</a>
+        </div>
+    </div>
+
+    <section class="hero">
+        <h1>Welcome to Palm Beach County Roleplay</h1>
+        <p>Join one of the most immersive Roblox ERLC roleplay communities. Realistic scenarios, active staff, and a friendly community.</p>
+        <a href="https://discord.gg/pbc" class="btn">Join Our Discord</a>
+    </section>
+
+    <section id="features" class="section">
+        <h2>Server Features</h2>
+        <div class="grid">
+            <div class="card">
+                <i class="fas fa-users"></i>
+                <h3>Active Community</h3>
+                <p>Daily roleplays with experienced and friendly members.</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Professional Staff</h3>
+                <p>Fair moderation and structured roleplay.</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-car"></i>
+                <h3>Realistic RP</h3>
+                <p>High-quality scenarios including law enforcement, fire, and civilian life.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="departments" class="section">
+        <h2>Departments</h2>
+        <div class="grid">
+            <div class="card">
+                <i class="fas fa-badge-sheriff"></i>
+                <h3>Law Enforcement</h3>
+                <p>Protect and serve Palm Beach County.</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-fire"></i>
+                <h3>Fire & Rescue</h3>
+                <p>Respond to emergencies and save lives.</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-user"></i>
+                <h3>Civilian Operations</h3>
+                <p>Create your own story and roleplay freely.</p>
+            </div>
+                  <div class="card">
+                <i class="fas fa-user"></i>
+                <h3>Department Of Transportation</h3>
+                <p>Maintain Roads, Streelamps, Or just do regular Maintenance.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        © 2026 Palm Beach County Roleplay -- Developed entirely by arckey_ on Discord
+    </footer>
+
+</body>
+</html>
