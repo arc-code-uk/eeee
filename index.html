@@ -36,10 +36,19 @@
             align-items: center;
         }
 
+        /* ✅ UPDATED BRAND */
         .brand {
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand img {
+            height: 40px;
+            width: auto;
         }
 
         .nav a {
@@ -165,7 +174,12 @@
 <body>
 
     <div class="navbar">
-        <div class="brand">Palm Beach County RP</div>
+        <!-- ✅ UPDATED BRAND HTML -->
+        <div class="brand">
+            <img src="logo.png" alt="Logo">
+            Palm Beach County RP
+        </div>
+
         <div class="nav">
             <a href="#features">Features</a>
             <a href="#departments">Departments</a>
