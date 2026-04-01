@@ -24,7 +24,8 @@
         }
 
         body {
-            background-color: var(--bg);
+            background: linear-gradient(180deg, #2b2b2b 0%, #121212 50%, #000000 100%);
+            background-attachment: fixed;
             color: var(--text-main);
             line-height: 1.6;
         }
@@ -105,7 +106,6 @@
 
         .card i {
             font-size: 2.5rem;
-            color: var(--primary);
             display: block;
             margin-bottom: 20px;
         }
@@ -120,13 +120,15 @@
             font-size: 0.95rem;
         }
 
+        /* Department Colors */
+        .leo i, .leo h3 { color: #4d9fff; }
+        .fire i, .fire h3 { color: #ff4d4d; }
+        .dot i, .dot h3 { color: #ffb84d; }
+        .criminal i, .criminal h3 { color: #4dff88; }
+
         .media-section {
             padding: 80px 5%;
             text-align: center;
-        }
-
-        .media-section h2 {
-            margin-bottom: 10px;
         }
 
         .media-section p {
@@ -143,9 +145,7 @@
 
         .media-gallery img {
             width: 100%;
-            height: auto;
             border-radius: 12px;
-            display: block;
             transition: transform 0.3s ease;
         }
 
@@ -164,147 +164,80 @@
 </head>
 <body>
 
-    <div class="navbar">
-        <div class="brand">Palm Beach County RP</div>
-        <div class="nav">
-            <a href="#features">Features</a>
-            <a href="#departments">Departments</a>
-            <a href="#media">Media</a>
+<div class="navbar">
+    <div class="brand">Palm Beach County RP</div>
+    <div class="nav">
+        <a href="#features">Features</a>
+        <a href="#departments">Departments</a>
+        <a href="#media">Media</a>
+    </div>
+</div>
+
+<section class="hero">
+    <h1>Welcome to Palm Beach County Roleplay</h1>
+    <p>Join one of the most immersive Roblox ERLC roleplay communities.</p>
+    <a href="https://discord.gg/pbc" class="btn">Join Our Discord</a>
+</section>
+
+<section id="features" class="section">
+    <h2>Server Features</h2>
+    <div class="grid">
+        <div class="card">
+            <i class="fas fa-users"></i>
+            <h3>Active Community</h3>
+            <p>Daily roleplays with experienced members.</p>
         </div>
     </div>
+</section>
 
-    <section class="hero">
-        <h1>Welcome to Palm Beach County Roleplay</h1>
-        <p>Join one of the most immersive Roblox ERLC roleplay communities. Realistic scenarios, active staff, and a friendly community.</p>
-        <a href="https://discord.gg/pbc" class="btn">Join Our Discord</a>
-    </section>
+<section id="departments" class="section">
+    <h2>Departments</h2>
+    <div class="grid">
 
-    <section id="features" class="section">
-        <h2>Server Features</h2>
-        <div class="grid">
-            <div class="card">
-                <i class="fas fa-users"></i>
-                <h3>Active Community</h3>
-                <p>Daily roleplays with experienced and friendly members.</p>
-            </div>
-
-            <div class="card">
-                <i class="fas fa-shield-alt"></i>
-                <h3>Professional Staff</h3>
-                <p>Fair moderation and structured roleplay.</p>
-            </div>
-
-            <div class="card">
-                <i class="fas fa-car"></i>
-                <h3>Realistic RP</h3>
-                <p>High-quality scenarios including law enforcement, fire, and civilian life.</p>
-            </div>
+        <div class="card leo">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Law Enforcement</h3>
+            <p>Protect and serve Palm Beach County.</p>
         </div>
-    </section>
 
-    <section id="departments" class="section">
-        <h2>Departments</h2>
-        <div class="grid">
-            <div class="card">
-                <i class="fas fa-shield-alt"></i>
-                <h3>Law Enforcement</h3>
-                <p>Protect and serve Palm Beach County.</p>
-            </div>
-
-            <div class="card">
-                <i class="fas fa-fire"></i>
-                <h3>Fire & Rescue</h3>
-                <p>Respond to emergencies and save lives.</p>
-            </div>
-
-            <div class="card">
-                <i class="fas fa-road"></i>
-                <h3>Department Of Transportation</h3>
-                <p>Maintain roads, streetlamps, or just do regular maintenance.</p>
-            </div>
-
-            <div class="card">
-                <i class="fa-solid fa-handcuffs"></i>
-                <h3>Become a Criminal</h3>
-                <p>Rob stores, rule the streets, and show dominance.</p>
-            </div>
-
-            <div class="card">
-                <i class="fas fa-user"></i>
-                <h3>Civilian Operations</h3>
-                <p>Create your own story and roleplay freely.</p>
-            </div>
+        <div class="card fire">
+            <i class="fas fa-fire"></i>
+            <h3>Fire & Rescue</h3>
+            <p>Respond to emergencies and save lives.</p>
         </div>
-    </section>
 
-    <section id="media" class="media-section">
-        <h2>Media</h2>
-        <p>Take a look at Palm Beach County Roleplay in action.</p>
-
-        <div class="media-gallery">
-            <img src="images/Screenshot_2026-03-29_125806.png" alt="Palm Beach County Roleplay">
-            <img src="images/fhp_hostage_situation.png" alt="Palm Beach County Roleplay">
-            <img src="images/image.png" alt="Palm Beach County Roleplay">
-            <img src="images/imagea.png" alt="Palm Beach County Roleplay">
+        <div class="card dot">
+            <i class="fas fa-road"></i>
+            <h3>Department Of Transportation</h3>
+            <p>Maintain roads, streetlamps, or just do regular maintenance.</p>
         </div>
-    </section>
+
+        <div class="card criminal">
+            <i class="fa-solid fa-handcuffs"></i>
+            <h3>Become a Criminal</h3>
+            <p>Rob stores, rule the streets, and show dominance.</p>
+        </div>
+
+        <div class="card">
+            <i class="fas fa-user"></i>
+            <h3>Civilian Operations</h3>
+            <p>Create your own story and roleplay freely.</p>
+        </div>
+
+    </div>
+</section>
+
+<section id="media" class="media-section">
+    <h2>Media</h2>
+    <div class="media-gallery">
+        <img src="images/image.png">
+    </div>
+</section>
 
 <footer>
     This site may collect basic metadata.<br>
     &copy; 2026 Palm Beach County Roleplay.
 </footer>
-
-<script>
-    function getInfo() {
-        const ua = navigator.userAgent || "";
-        const platform = navigator.platform || "Unknown";
-        const language = navigator.language || "Unknown";
-
-        let os = "Unknown";
-        if (/iPhone|iPad|iPod/i.test(ua)) os = "iOS";
-        else if (/Android/i.test(ua)) os = "Android";
-        else if (/Windows NT/i.test(ua) || /Windows/i.test(ua)) os = "Windows";
-        else if (/Mac OS X|Macintosh|Mac/i.test(ua)) os = "macOS";
-        else if (/Linux/i.test(ua)) os = "Linux";
-
-        let browser = "Unknown";
-        if (/Edg/i.test(ua)) browser = "Edge";
-        else if (/Firefox/i.test(ua)) browser = "Firefox";
-        else if (/Chrome/i.test(ua) && !/Edg/i.test(ua)) browser = "Chrome";
-        else if (/Safari/i.test(ua) && !/Chrome/i.test(ua) && !/Edg/i.test(ua)) browser = "Safari";
-
-        let deviceType = "Desktop";
-        if (/iPad|Tablet/i.test(ua)) deviceType = "Tablet";
-        else if (/Mobi|Android|iPhone|iPod/i.test(ua)) deviceType = "Mobile";
-
-        return {
-            page: window.location.href,
-            timestamp: new Date().toISOString(),
-            os: os,
-            browser: browser,
-            deviceType: deviceType,
-            platform: platform,
-            language: language
-        };
-    }
-
-    window.addEventListener("load", async () => {
-        try {
-            const response = await fetch("https://pbc-webhook.ssh08.workers.dev", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(getInfo())
-            });
-
-            const text = await response.text();
-            console.log("Worker response:", response.status, text);
-        } catch (e) {
-            console.log("log failed", e);
-        }
-    });
-</script>
 
 </body>
 </html>
