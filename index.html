@@ -1,319 +1,615 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Palm Beach County Roleplay</title>
-    <link rel="icon" type="image/png" href="logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #4d9fff;
-            --bg: #050505;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --text-main: #ffffff;
-            --text-dim: #a1a1a1;
-        }
+<meta charset="UTF-8">
+<title>Vaporwave Grid UI</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
-        }
+<style>
+:root {
+    --bg-main: #120824;
+    --accent: #ff77ff;
+    --accent-soft: rgba(255, 119, 255, 0.35);
+    --grid-color: rgba(255, 119, 255, 0.18);
+    --text-color: #ffffff;
+    --font-family-main: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-size-main: 18px;
+    --font-weight-main: 500;
+    --btn-bg: rgba(255,255,255,0.05);
+    --btn-bg-hover: rgba(255,255,255,0.12);
+    --btn-border: rgba(255,255,255,0.08);
+    --btn-border-hover: rgba(255,119,255,0.4);
+}
 
-        body {
-            background: linear-gradient(180deg, #2b2b2c 0%, #121212 50%, #000000 100%);
-            background-attachment: fixed;
-            color: var(--text-main);
-            line-height: 1.6;
-        }
+/* GLOBAL */
+* {
+    box-sizing: border-box;
+}
 
-        .navbar {
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    cursor: default;
+    background: var(--bg-main);
+    font-family: var(--font-family-main);
+    color: var(--text-color);
+}
 
-        .brand {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
+/* GRID BACKGROUND */
+.grid-wrap {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+}
 
-        .nav a {
-            margin-left: 20px;
-            color: var(--text-dim);
-            text-decoration: none;
-            transition: 0.3s;
-        }
+.grid {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-size: 40px 40px;
+    background-image:
+        linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+    transition: transform 0.15s linear, filter 0.3s ease-out;
+    will-change: transform;
+}
 
-        .nav a:hover {
-            color: var(--primary);
-        }
+/* extra subtle glow in center */
+.grid-center-glow {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 600px;
+    height: 600px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(0,255,255,0.25), transparent 60%);
+    mix-blend-mode: screen;
+    pointer-events: none;
+}
 
-        .hero {
-            text-align: center;
-            padding: 100px 20px;
-        }
+/* GRAVITY MODES (JS drives transform, these just tweak feel) */
+body.gravity-on .grid {
+    filter: blur(0.5px);
+}
+body.gravity-off .grid {
+    filter: blur(0px);
+}
 
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-        }
+/* CURSOR GLOW */
+.cursor-glow {
+    position: fixed;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-soft), rgba(0,0,0,0));
+    filter: blur(22px);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}
 
-        .hero p {
-            color: var(--text-dim);
-            max-width: 600px;
-            margin: 0 auto 40px auto;
-        }
+/* MAIN CONTENT */
+.main-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
 
-        .btn {
-            background: var(--primary);
-            padding: 15px 35px;
-            border-radius: 10px;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
-        }
+/* MAIN BUTTON */
+.main-button {
+    padding: 16px 40px;
+    border-radius: 25px;
+    border: 1px solid var(--btn-border);
+    background: var(--btn-bg);
+    backdrop-filter: blur(10px);
+    color: var(--text-color);
+    font-size: var(--font-size-main);
+    font-weight: var(--font-weight-main);
+    transition: 0.25s ease;
+    cursor: pointer;
+    position: relative;
+}
+.main-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    background: var(--btn-bg-hover);
+    border-color: var(--btn-border-hover);
+    box-shadow: 0 0 25px var(--accent-soft);
+}
 
-        .section {
-            padding: 80px 5%;
-            text-align: center;
-        }
+/* SETTINGS TOGGLE BUTTON */
+.settings-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 18px;
+    border-radius: 12px;
+    background: rgba(10,10,18,0.9);
+    border: 1px solid rgba(255,255,255,0.18);
+    backdrop-filter: blur(12px);
+    color: #fff;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.2s;
+}
+.settings-toggle:hover {
+    background: rgba(255,255,255,0.12);
+}
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
+/* SETTINGS PANEL */
+.settings-panel {
+    position: fixed;
+    top: 0;
+    right: -360px;
+    width: 360px;
+    height: 100%;
+    background: rgba(10,10,18,0.97);
+    border-left: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(18px);
+    padding: 16px 16px 24px;
+    overflow-y: auto;
+    transition: right 0.35s ease;
+    z-index: 9;
+}
+.settings-panel.open {
+    right: 0;
+}
 
-        .card {
-            background: var(--card-bg);
-            padding: 40px 30px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s ease;
-        }
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.settings-title-main {
+    font-size: 15px;
+    font-weight: 600;
+}
+.settings-close {
+    cursor: pointer;
+    font-size: 13px;
+    opacity: 0.8;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.18);
+}
+.settings-close:hover {
+    background: rgba(255,255,255,0.12);
+}
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
+.settings-section {
+    margin-bottom: 14px;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+.settings-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.settings-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 6px;
+}
+.settings-row label {
+    font-size: 11px;
+    opacity: 0.85;
+}
+.settings-row input,
+.settings-row select {
+    width: 160px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #fff;
+    border-radius: 6px;
+    padding: 3px 6px;
+    font-size: 11px;
+}
+.settings-row input[type="range"] {
+    padding: 0;
+}
+.settings-row input[type="checkbox"] {
+    width: auto;
+}
+.settings-subnote {
+    font-size: 10px;
+    opacity: 0.6;
+}
 
-        .card i {
-            font-size: 2.5rem;
-            display: block;
-            margin-bottom: 20px;
-        }
-
-        .card h3 {
-            margin-bottom: 10px;
-            font-size: 1.5rem;
-        }
-
-        .card p {
-            color: var(--text-dim);
-            font-size: 0.95rem;
-        }
-
-        
-        .leo i, .leo h3 { color: #4d9fff; }
-        .fire i, .fire h3 { color: #ff4d4d; }
-        .dot i, .dot h3 { color: #ffb84d; }
-        .criminal i, .criminal h3 { color: #4dff88; }
-
-        .media-section {
-            padding: 80px 5%;
-            text-align: center;
-        }
-
-        .media-section h2 {
-            margin-bottom: 10px;
-        }
-
-        .media-section p {
-            margin-bottom: 30px;
-            color: var(--text-dim);
-        }
-
-        .media-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .media-gallery img {
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-
-        .media-gallery img:hover {
-            transform: scale(1.05);
-        }
-
-        footer {
-            text-align: center;
-            padding: 60px 40px;
-            color: var(--text-dim);
-            font-size: 0.85rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-    </style>
+/* SMALL THEME PREVIEW */
+.theme-preview {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.4);
+}
+</style>
 </head>
-<body>
+<body class="gravity-on">
 
-<div class="navbar">
-    <div class="brand">Palm Beach County RP</div>
-    <div class="nav">
-        <a href="#features">Features</a>
-        <a href="#departments">Departments</a>
-        <a href="#media">Media</a>
+<div class="grid-wrap">
+    <div class="grid" id="grid"></div>
+    <div class="grid-center-glow"></div>
+</div>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<button class="settings-toggle" id="settingsToggle">⚙ Settings</button>
+
+<div class="settings-panel" id="settingsPanel">
+    <div class="settings-header">
+        <div class="settings-title-main">Settings</div>
+        <div style="display:flex;align-items:center;gap:8px;">
+            <div class="theme-preview" id="themePreview"></div>
+            <div class="settings-close" id="settingsClose">Close</div>
+        </div>
+    </div>
+
+    <!-- 1. THEME -->
+    <div class="settings-section">
+        <div class="settings-title">Theme</div>
+        <div class="settings-row">
+            <label>Preset</label>
+            <select id="themeSelect">
+                <option value="vapor">Vaporwave (Default)</option>
+                <option value="nova">Nova Purple</option>
+                <option value="matrix">Matrix Green</option>
+                <option value="ocean">Deep Ocean</option>
+                <option value="ember">Ember Glow</option>
+                <option value="mono">Monochrome</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- 2. TEXT -->
+    <div class="settings-section">
+        <div class="settings-title">Text</div>
+        <div class="settings-row">
+            <label>Font</label>
+            <select id="fontSelect">
+                <option value='"Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif'>Inter</option>
+                <option value='system-ui, -apple-system, BlinkMacSystemFont, sans-serif'>System UI</option>
+                <option value='Segoe UI, sans-serif'>Segoe UI</option>
+                <option value='Roboto, system-ui, sans-serif'>Roboto</option>
+                <option value='Poppins, system-ui, sans-serif'>Poppins</option>
+                <option value='Montserrat, system-ui, sans-serif'>Montserrat</option>
+                <option value='Space Grotesk, system-ui, sans-serif'>Space Grotesk</option>
+                <option value='JetBrains Mono, monospace'>JetBrains Mono</option>
+                <option value='Consolas, monospace'>Consolas</option>
+                <option value='Courier New, monospace'>Courier New</option>
+            </select>
+        </div>
+        <div class="settings-row">
+            <label>Size</label>
+            <input type="range" id="fontSize" min="12" max="32" value="18">
+        </div>
+        <div class="settings-row">
+            <label>Weight</label>
+            <select id="fontWeight">
+                <option value="300">Light</option>
+                <option value="400">Regular</option>
+                <option value="500" selected>Medium</option>
+                <option value="600">Semi-Bold</option>
+                <option value="700">Bold</option>
+            </select>
+        </div>
+        <div class="settings-row">
+            <label>Color</label>
+            <input type="color" id="textColor" value="#ffffff">
+        </div>
+    </div>
+
+    <!-- 3. CURSOR -->
+    <div class="settings-section">
+        <div class="settings-title">Cursor Glow</div>
+        <div class="settings-row">
+            <label>Size</label>
+            <input type="range" id="cursorSize" min="30" max="140" value="70">
+        </div>
+        <div class="settings-row">
+            <label>Blur</label>
+            <input type="range" id="cursorBlur" min="10" max="40" value="22">
+        </div>
+        <div class="settings-row">
+            <label>Color</label>
+            <input type="color" id="cursorColor" value="#ff77ff">
+        </div>
+    </div>
+
+    <!-- 4. BACKGROUND -->
+    <div class="settings-section">
+        <div class="settings-title">Background</div>
+        <div class="settings-row">
+            <label>Base Color</label>
+            <input type="color" id="bgColor" value="#120824">
+        </div>
+        <div class="settings-row">
+            <label>Grid Color</label>
+            <input type="color" id="gridColor" value="#ff77ff">
+        </div>
+    </div>
+
+    <!-- 5. GRAVITY -->
+    <div class="settings-section">
+        <div class="settings-title">Gravity Sink</div>
+        <div class="settings-row">
+            <label>Enable</label>
+            <input type="checkbox" id="gravityToggle" checked>
+        </div>
+        <div class="settings-subnote">
+            When enabled, the grid sinks/warps more toward the center as you move around.
+        </div>
+    </div>
+
+    <!-- 6. BUTTONS -->
+    <div class="settings-section">
+        <div class="settings-title">Buttons</div>
+        <div class="settings-row">
+            <label>BG</label>
+            <input type="color" id="btnBg" value="#1a1a22">
+        </div>
+        <div class="settings-row">
+            <label>Glow</label>
+            <input type="color" id="btnGlow" value="#ff77ff">
+        </div>
+        <div class="settings-row">
+            <label>Radius</label>
+            <input type="range" id="btnRadius" min="4" max="40" value="25">
+        </div>
+    </div>
+
+    <!-- 7–10 placeholders (you can wire later) -->
+    <div class="settings-section">
+        <div class="settings-title">Section 7 – Extra Text FX</div>
+        <div class="settings-subnote">Reserved for shadows, outlines, etc.</div>
+    </div>
+    <div class="settings-section">
+        <div class="settings-title">Section 8 – Animations</div>
+        <div class="settings-subnote">Reserved for speed, easing, etc.</div>
+    </div>
+    <div class="settings-section">
+        <div class="settings-title">Section 9 – Layout</div>
+        <div class="settings-subnote">Reserved for padding, spacing, etc.</div>
+    </div>
+    <div class="settings-section">
+        <div class="settings-title">Section 10 – Advanced</div>
+        <div class="settings-subnote">Reserved for wild stuff later.</div>
     </div>
 </div>
 
-<section class="hero">
-    <h1>Welcome to Palm Beach County Roleplay</h1>
-    <p>Join one of the most immersive Roblox ERLC roleplay communities. Realistic scenarios, active staff, and a friendly community.</p>
-    <a href="https://discord.gg/pbc" class="btn">Join Our Discord</a>
-</section>
-
-<section id="features" class="section">
-    <h2>Server Features</h2>
-    <div class="grid">
-        <div class="card">
-            <i class="fas fa-users"></i>
-            <h3>Active Community</h3>
-            <p>Daily roleplays with experienced and friendly members.</p>
-        </div>
-
-        <div class="card">
-            <i class="fas fa-shield-alt"></i>
-            <h3>Professional Staff</h3>
-            <p>Fair moderation and structured roleplay.</p>
-        </div>
-
-        <div class="card">
-            <i class="fas fa-car"></i>
-            <h3>Realistic RP</h3>
-            <p>High-quality scenarios including law enforcement, fire, and civilian life.</p>
-        </div>
-    </div>
-</section>
-
-<section id="departments" class="section">
-    <h2>Departments</h2>
-    <div class="grid">
-
-        <div class="card leo">
-            <i class="fas fa-shield-alt"></i>
-            <h3>Law Enforcement</h3>
-            <p>Protect and serve Palm Beach County.</p>
-        </div>
-
-        <div class="card fire">
-            <i class="fas fa-fire"></i>
-            <h3>Fire & Rescue</h3>
-            <p>Respond to emergencies and save lives.</p>
-        </div>
-
-        <div class="card dot">
-            <i class="fas fa-road"></i>
-            <h3>Department Of Transportation</h3>
-            <p>Maintain roads, streetlamps, or just do regular maintenance.</p>
-        </div>
-
-        <div class="card criminal">
-            <i class="fas fa-mask"></i>
-            <h3>Become a Criminal</h3>
-            <p>Rob stores, rule the streets, and show dominance.</p>
-        </div>
-
-        <div class="card">
-            <i class="fas fa-user"></i>
-            <h3>Civilian Operations</h3>
-            <p>Create your own story and roleplay freely.</p>
-        </div>
-
-    </div>
-</section>
-
-<section id="media" class="media-section">
-    <h2>Media</h2>
-    <p>Take a look at Palm Beach County Roleplay in action.</p>
-
-    <div class="media-gallery">
-        <img src="images/Screenshot_2026-03-29_125806.png">
-        <img src="images/fhp_hostage_situation.png">
-        <img src="images/image.png">
-        <img src="images/imagea.png">
-    </div>
-</section>
-
-<footer>
-    <a href="https://palmbeachcountyroleplay.xyz">palmbeachcountyroleplay.xyz</a><br>
-    &copy; 2026 Palm Beach County Roleplay.
-</footer>
+<div class="main-center">
+    <button class="main-button" id="mainButton">Hover Me</button>
+</div>
 
 <script>
-function getInfo() {
-    const ua = navigator.userAgent || "";
-    const platform = navigator.platform || "Unknown";
-    const language = navigator.language || "Unknown";
+/* ELEMENTS */
+const grid = document.getElementById('grid');
+const cursorGlow = document.getElementById('cursorGlow');
+const settingsToggle = document.getElementById('settingsToggle');
+const settingsPanel = document.getElementById('settingsPanel');
+const settingsClose = document.getElementById('settingsClose');
+const themePreview = document.getElementById('themePreview');
+const mainButton = document.getElementById('mainButton');
 
-    let os = "Unknown";
-    if (/iPhone|iPad|iPod/i.test(ua)) os = "iOS";
-    else if (/Android/i.test(ua)) os = "Android";
-    else if (/Windows NT/i.test(ua) || /Windows/i.test(ua)) os = "Windows";
-    else if (/Mac OS X|Macintosh|Mac/i.test(ua)) os = "macOS";
-    else if (/Linux/i.test(ua)) os = "Linux";
+/* SETTINGS INPUTS */
+const themeSelect = document.getElementById('themeSelect');
+const fontSelect = document.getElementById('fontSelect');
+const fontSizeInput = document.getElementById('fontSize');
+const fontWeightInput = document.getElementById('fontWeight');
+const textColorInput = document.getElementById('textColor');
+const cursorSizeInput = document.getElementById('cursorSize');
+const cursorBlurInput = document.getElementById('cursorBlur');
+const cursorColorInput = document.getElementById('cursorColor');
+const bgColorInput = document.getElementById('bgColor');
+const gridColorInput = document.getElementById('gridColor');
+const gravityToggle = document.getElementById('gravityToggle');
+const btnBgInput = document.getElementById('btnBg');
+const btnGlowInput = document.getElementById('btnGlow');
+const btnRadiusInput = document.getElementById('btnRadius');
 
-    let browser = "Unknown";
-    if (/Edg/i.test(ua)) browser = "Edge";
-    else if (/Firefox/i.test(ua)) browser = "Firefox";
-    else if (/Chrome/i.test(ua) && !/Edg/i.test(ua)) browser = "Chrome";
-    else if (/Safari/i.test(ua) && !/Chrome/i.test(ua) && !/Edg/i.test(ua)) browser = "Safari";
+/* THEMES (simplified set) */
+const themes = {
+    vapor: {
+        accent: '#ff77ff',
+        bg: '#120824',
+        grid: 'rgba(255, 119, 255, 0.18)',
+        btnBg: 'rgba(255,255,255,0.05)',
+        btnHover: 'rgba(255,255,255,0.12)'
+    },
+    nova: {
+        accent: '#965aff',
+        bg: '#05050a',
+        grid: 'rgba(150, 90, 255, 0.18)',
+        btnBg: 'rgba(255,255,255,0.05)',
+        btnHover: 'rgba(255,255,255,0.12)'
+    },
+    matrix: {
+        accent: '#00ff41',
+        bg: '#010805',
+        grid: 'rgba(0, 255, 65, 0.18)',
+        btnBg: 'rgba(0,40,10,0.6)',
+        btnHover: 'rgba(0,70,20,0.9)'
+    },
+    ocean: {
+        accent: '#00d4ff',
+        bg: '#021018',
+        grid: 'rgba(0, 212, 255, 0.18)',
+        btnBg: 'rgba(0,40,60,0.6)',
+        btnHover: 'rgba(0,60,90,0.9)'
+    },
+    ember: {
+        accent: '#ff7043',
+        bg: '#140803',
+        grid: 'rgba(255, 112, 67, 0.18)',
+        btnBg: 'rgba(70,30,10,0.6)',
+        btnHover: 'rgba(100,45,15,0.9)'
+    },
+    mono: {
+        accent: '#ffffff',
+        bg: '#000000',
+        grid: 'rgba(255,255,255,0.12)',
+        btnBg: 'rgba(255,255,255,0.02)',
+        btnHover: 'rgba(255,255,255,0.08)'
+    }
+};
 
-    let deviceType = "Desktop";
-    if (/iPad|Tablet/i.test(ua)) deviceType = "Tablet";
-    else if (/Mobi|Android|iPhone|iPod/i.test(ua)) deviceType = "Mobile";
-
-    return {
-        page: window.location.href,
-        timestamp: new Date().toISOString(),
-        os: os,
-        browser: browser,
-        deviceType: deviceType,
-        platform: platform,
-        language: language
-    };
+function hexToRgba(hex, alpha) {
+    hex = hex.replace('#','');
+    if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+    const num = parseInt(hex, 16);
+    const r = (num >> 16) & 255;
+    const g = (num >> 8) & 255;
+    const b = num & 255;
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-window.addEventListener("load", async () => {
-    try {
-        const response = await fetch("https://pbc-webhook.ssh08.workers.dev", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(getInfo())
-        });
+/* APPLY THEME */
+function applyTheme(name) {
+    const t = themes[name];
+    if (!t) return;
+    document.documentElement.style.setProperty('--accent', t.accent);
+    document.documentElement.style.setProperty('--accent-soft', hexToRgba(t.accent, 0.35));
+    document.documentElement.style.setProperty('--bg-main', t.bg);
+    document.documentElement.style.setProperty('--grid-color', t.grid);
+    document.documentElement.style.setProperty('--btn-bg', t.btnBg);
+    document.documentElement.style.setProperty('--btn-bg-hover', t.btnHover);
+    document.documentElement.style.setProperty('--btn-border-hover', hexToRgba(t.accent, 0.4));
 
-        const text = await response.text();
-        console.log("Worker response:", response.status, text);
-    } catch (e) {
-        console.log("log failed", e);
+    bgColorInput.value = t.bg;
+    gridColorInput.value = '#'+t.grid.match(/\d+/g).slice(0,3).map(x => (+x).toString(16).padStart(2,'0')).join('');
+    cursorColorInput.value = t.accent;
+    btnBgInput.value = '#'+t.btnBg.match(/\d+/g).slice(0,3).map(x => (+x).toString(16).padStart(2,'0')).join('');
+    btnGlowInput.value = t.accent;
+    themePreview.style.background = t.accent;
+
+    updateCursorGlow();
+    updateButtonStyles();
+}
+
+/* CURSOR FOLLOW */
+document.addEventListener('mousemove', (e) => {
+    cursorGlow.style.left = e.clientX + 'px';
+    cursorGlow.style.top = e.clientY + 'px';
+    updateGridSink(e.clientX, e.clientY);
+});
+
+/* GRID SINK (gravity) */
+function updateGridSink(x, y) {
+    const rect = document.body.getBoundingClientRect();
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const dx = x - cx;
+    const dy = y - cy;
+
+    const strength = gravityToggle.checked ? 0.08 : 0.02;
+    const tx = -dx * strength;
+    const ty = -dy * strength;
+
+    grid.style.transform = `translate(${tx}px, ${ty}px)`;
+}
+
+/* CURSOR GLOW SETTINGS */
+function updateCursorGlow() {
+    const size = cursorSizeInput.value;
+    const blur = cursorBlurInput.value;
+    const color = cursorColorInput.value;
+    cursorGlow.style.width = size + 'px';
+    cursorGlow.style.height = size + 'px';
+    cursorGlow.style.filter = `blur(${blur}px)`;
+    cursorGlow.style.background = `radial-gradient(circle, ${hexToRgba(color,0.35)}, transparent)`;
+}
+
+/* TEXT SETTINGS */
+function updateTextStyles() {
+    document.documentElement.style.setProperty('--font-family-main', fontSelect.value);
+    document.documentElement.style.setProperty('--font-size-main', fontSizeInput.value + 'px');
+    document.documentElement.style.setProperty('--font-weight-main', fontWeightInput.value);
+    document.documentElement.style.setProperty('--text-color', textColorInput.value);
+}
+
+/* BACKGROUND SETTINGS */
+function updateBackground() {
+    const bg = bgColorInput.value;
+    const gridColor = gridColorInput.value;
+    document.documentElement.style.setProperty('--bg-main', bg);
+    document.documentElement.style.setProperty('--grid-color', hexToRgba(gridColor, 0.18));
+}
+
+/* GRAVITY TOGGLE */
+gravityToggle.addEventListener('change', () => {
+    if (gravityToggle.checked) {
+        document.body.classList.add('gravity-on');
+        document.body.classList.remove('gravity-off');
+    } else {
+        document.body.classList.add('gravity-off');
+        document.body.classList.remove('gravity-on');
     }
 });
+
+/* BUTTON STYLES */
+function updateButtonStyles() {
+    const bg = btnBgInput.value;
+    const glow = btnGlowInput.value;
+    const radius = btnRadiusInput.value;
+    document.documentElement.style.setProperty('--btn-bg', hexToRgba(bg, 0.7));
+    document.documentElement.style.setProperty('--btn-bg-hover', hexToRgba(bg, 1));
+    document.documentElement.style.setProperty('--btn-border', hexToRgba(glow, 0.25));
+    document.documentElement.style.setProperty('--btn-border-hover', hexToRgba(glow, 0.5));
+    mainButton.style.borderRadius = radius + 'px';
+}
+
+/* SETTINGS PANEL OPEN/CLOSE */
+settingsToggle.addEventListener('click', () => {
+    settingsPanel.classList.add('open');
+    settingsToggle.style.display = 'none';
+});
+settingsClose.addEventListener('click', () => {
+    settingsPanel.classList.remove('open');
+    settingsToggle.style.display = 'inline-flex';
+});
+
+/* INPUT LISTENERS */
+themeSelect.addEventListener('change', () => {
+    if (themeSelect.value === 'custom') return;
+    applyTheme(themeSelect.value);
+});
+fontSelect.addEventListener('change', updateTextStyles);
+fontSizeInput.addEventListener('input', updateTextStyles);
+fontWeightInput.addEventListener('change', updateTextStyles);
+textColorInput.addEventListener('input', updateTextStyles);
+
+cursorSizeInput.addEventListener('input', updateCursorGlow);
+cursorBlurInput.addEventListener('input', updateCursorGlow);
+cursorColorInput.addEventListener('input', updateCursorGlow);
+
+bgColorInput.addEventListener('input', updateBackground);
+gridColorInput.addEventListener('input', updateBackground);
+
+btnBgInput.addEventListener('input', updateButtonStyles);
+btnGlowInput.addEventListener('input', updateButtonStyles);
+btnRadiusInput.addEventListener('input', updateButtonStyles);
+
+/* INIT: vaporwave default */
+applyTheme('vapor');
+updateCursorGlow();
+updateTextStyles();
+updateBackground();
+updateButtonStyles();
 </script>
-
-
 </body>
 </html>
